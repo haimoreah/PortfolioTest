@@ -13,6 +13,14 @@ import { portfolioRepository } from "@/data/portfolio-repository";
 import { calculatePortfolioScore, compareToBenchmark } from "@/lib/scoring";
 import { validatePortfolio } from "@/lib/validation/portfolio-schema";
 
+export async function generateStaticParams() {
+  const { portfolioRepository } = await import("@/data/portfolio-repository");
+  // portfolioRepository is in-memory; we list all known slugs so Next.js can
+  // pre-render each portfolio page at build time.
+  const slugs = ["amwal-w-enta-qaed"];
+  return slugs.map((slug) => ({ slug }));
+}
+
 interface ReportPageProps {
   params: Promise<{ slug: string }>;
 }
