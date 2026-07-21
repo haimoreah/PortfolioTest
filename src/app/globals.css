@@ -168,7 +168,7 @@ body {
   mask-composite: intersect;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 900px) {
   .brand-watermark {
     display: block;
   }
