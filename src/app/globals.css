@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f3f5f7;
+  --foreground: #101828;
+
+  --card: #ffffff;
+  --card-foreground: #101828;
+
+  --muted: #eef1f4;
+  --muted-foreground: #5b6472;
+
+  --border: #e2e6ea;
+
+  --primary: #0e9f6e;
+  --primary-hover: #0b8a5f;
+  --primary-foreground: #ffffff;
+
+  --secondary: #101828;
+  --secondary-foreground: #ffffff;
+
+  --success: #0e9f6e;
+  --warning: #d97706;
+  --destructive: #dc2626;
+
+  --radius: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #060b16;
+    --foreground: #eef1f6;
+
+    --card: #0e1626;
+    --card-foreground: #eef1f6;
+
+    --muted: #101a2c;
+    --muted-foreground: #90a0b7;
+
+    --border: #1c2740;
+
+    --primary: #22c58b;
+    --primary-hover: #1aa876;
+    --primary-foreground: #04120c;
+
+    --secondary: #1c2740;
+    --secondary-foreground: #eef1f6;
+
+    --success: #22c58b;
+    --warning: #f0a83c;
+    --destructive: #f16565;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --radius-card: var(--radius);
+  --font-sans: var(--font-tajawal);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+* {
+  border-color: var(--border);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media print {
+  .print-hidden {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print-force-open {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+  }
+
+  .print-no-shadow {
+    box-shadow: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
