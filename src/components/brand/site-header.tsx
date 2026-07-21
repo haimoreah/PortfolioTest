@@ -1,5 +1,6 @@
-import Image from "next/image";
 import { BRAND_NAME, PERSONAL_PAGE_URL } from "@/lib/brand";
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export function SiteHeader() {
   return (
@@ -12,7 +13,8 @@ export function SiteHeader() {
           className="brand-link"
           aria-label={`${BRAND_NAME} على إنستغرام`}
         >
-          <Image src="/brand/mr-amwal-logo.png" alt={BRAND_NAME} width={40} height={40} className="brand-logo" priority />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`${BASE}/brand/mr-amwal-logo.png`} alt={BRAND_NAME} width={40} height={40} className="brand-logo" />
           <span className="brand-name">{BRAND_NAME}</span>
         </a>
       </div>
