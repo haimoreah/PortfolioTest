@@ -146,33 +146,32 @@ body {
   }
 }
 
-/* ─── Brand watermark — all screens, behind all content ─── */
+/* ─── Brand watermark — right side hero, all screens ─── */
 .brand-watermark {
   display: block;
   position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 80vh;
+  right: 0;
+  bottom: 0;
+  height: 88vh;
   width: auto;
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  opacity: 0.9;
+  opacity: 1;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, black 18%, black 72%, transparent 96%),
-    linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%);
+    linear-gradient(to left, black 40%, transparent 100%),
+    linear-gradient(to top, black 60%, transparent 100%);
   -webkit-mask-composite: destination-in;
   mask-image:
-    linear-gradient(to right, transparent 0%, black 18%, black 72%, transparent 96%),
-    linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%);
+    linear-gradient(to left, black 40%, transparent 100%),
+    linear-gradient(to top, black 60%, transparent 100%);
   mask-composite: intersect;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .brand-watermark {
-    height: 55vh;
-    opacity: 0.7;
+    height: 50vh;
+    opacity: 0.5;
   }
 }
 
