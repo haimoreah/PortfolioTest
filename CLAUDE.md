@@ -9,10 +9,13 @@
 - `src/lib/scoring/` — محرك التقييم بالكامل: قواعد النقاط، حساب كل قسم، التجميع النهائي، توليد الخلاصات، والمقارنة بالمتوسط.
 - `src/lib/validation/` — التحقق من صحة بيانات المحفظة عبر Zod.
 - `src/lib/formatters.ts` — تنسيق موحّد للأرقام والعملة والنسب والتاريخ.
-- `src/components/report/` — مكونات صفحة التقرير (Accordion، البطاقات، الجداول، المؤشر الدائري...).
-- `src/components/dashboard/` — بطاقة الدخول من الصفحة الرئيسية.
+- `src/components/report/` — مكونات صفحة التقرير، بما فيها `report-view.tsx` (المكوّن المشترك الذي يجمّع التقرير كاملاً ويُستخدم من المسار الثابت ومن مسار التحليل معاً).
+- `src/components/dashboard/` — بطاقات الدخول من الصفحة الرئيسية.
+- `src/components/analyze/` — رفع السكرين شوت ونموذج مراجعة البيانات المستخرجة.
+- `src/components/brand/` — الهيدر والفوتر المشتركين (هوية Mr_Amwal).
 - `src/components/ui/` — مكونات عامة قابلة لإعادة الاستخدام (Card، Badge، Button، ProgressBar).
-- `src/app/` — الصفحات (App Router): `/`, `/portfolio/[slug]`, `not-found`.
+- `src/lib/ai/extract-portfolio.ts` — استدعاء Claude لاستخراج بيانات المحفظة من الصور (يتطلب `ANTHROPIC_API_KEY`).
+- `src/app/` — الصفحات (App Router): `/`, `/portfolio/[slug]`, `/portfolio/analyze`, `/api/analyze-portfolio`, `not-found`.
 - `tests/` — اختبارات Vitest لمحرك التقييم ومنطق المقارنة.
 
 ## قواعد أساسية

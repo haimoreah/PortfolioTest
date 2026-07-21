@@ -35,10 +35,10 @@ export function PortfolioEntryCard({ portfolio }: PortfolioEntryCardProps) {
       aria-label={`عرض تقرير ${portfolio.traderName}`}
       onClick={navigate}
       onKeyDown={handleKeyDown}
-      className="group flex cursor-pointer flex-col gap-5 p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-primary sm:p-8"
+      className="group flex cursor-pointer flex-col gap-5 p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-2 focus-visible:outline-primary sm:p-8"
     >
       <div className="flex items-start justify-between gap-3">
-        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary-subtle text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
           <ChartNoAxesCombined className="h-7 w-7" aria-hidden />
         </span>
         <RatingBadge rating={scoreResult.rating} />
@@ -58,7 +58,7 @@ export function PortfolioEntryCard({ portfolio }: PortfolioEntryCardProps) {
           </span>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors group-hover:bg-primary-hover">
+        <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-btn)] bg-gradient-to-br from-[#1AC5EE] via-primary to-[#0EA5C9] px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-btn)] transition-all group-hover:brightness-105">
           عرض التقرير
           <ChevronLeft className="h-4 w-4" aria-hidden />
         </span>

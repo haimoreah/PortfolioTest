@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Tajawal } from "next/font/google";
+import { Cairo } from "next/font/google";
+import { SiteHeader } from "@/components/brand/site-header";
 import "./globals.css";
 
-const tajawal = Tajawal({
-  variable: "--font-tajawal",
+const cairo = Cairo({
+  variable: "--font-cairo",
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -19,8 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${tajawal.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">{children}</body>
+    <html lang="ar" dir="rtl" className={`${cairo.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+        {/* eslint-disable-next-line @next/next/no-img-element -- fixed decorative watermark sized by viewport height, not a fit for next/image's intrinsic sizing model */}
+        <img src="/brand/character.png" alt="" aria-hidden="true" className="brand-watermark print-hidden" />
+        <SiteHeader />
+        <div className="relative flex flex-1 flex-col">{children}</div>
+      </body>
     </html>
   );
 }

@@ -7,7 +7,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_CLASSES: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-primary text-primary-foreground hover:bg-primary-hover",
+  primary:
+    "bg-gradient-to-br from-[#1AC5EE] via-primary to-[#0EA5C9] text-primary-foreground shadow-[var(--shadow-btn)] hover:brightness-105 active:brightness-95",
   secondary: "bg-secondary text-secondary-foreground hover:opacity-90",
   outline: "border border-border bg-card text-foreground hover:bg-muted",
   ghost: "text-foreground hover:bg-muted",
@@ -22,7 +23,7 @@ export function Button({ className, variant = "primary", size = "md", ...props }
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-[var(--radius-btn)] font-semibold transition-all focus-visible:outline-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50",
         VARIANT_CLASSES[variant],
         SIZE_CLASSES[size],
         className,
