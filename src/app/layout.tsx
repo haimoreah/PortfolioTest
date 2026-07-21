@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" className={`${cairo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {/* eslint-disable-next-line @next/next/no-img-element -- fixed decorative watermark sized by viewport height, not a fit for next/image's intrinsic sizing model */}
-        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/character.png`} alt="" aria-hidden="true" className="brand-watermark print-hidden" />
+        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/character.png?v=2`} alt="" aria-hidden="true" className="brand-watermark print-hidden" />
         <SiteHeader />
         <div className="relative flex flex-1 flex-col">{children}</div>
       </body>
