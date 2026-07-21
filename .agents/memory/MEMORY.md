@@ -1,0 +1,2 @@
+- [Hostinger PHP proxy deployment](hostinger-php-proxy.md) — Next.js on shared Hostinger needs PHP reverse proxy; crontab via SSH blocked but hPanel Cron Jobs works.
+- [Next.js basePath fetch fix](nextjs-basepath-fetch.md) — client-side fetch() doesn't auto-prepend basePath; must use NEXT_PUBLIC_BASE_PATH env var.
