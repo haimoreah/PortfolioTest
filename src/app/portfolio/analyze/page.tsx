@@ -3,18 +3,44 @@
 import { ArrowRight, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { PortfolioReviewForm } from "@/components/analyze/portfolio-review-form";
 import { ScreenshotUploader, type UploadedImage } from "@/components/analyze/screenshot-uploader";
 import { Button } from "@/components/ui/button";
 import { ReportView } from "@/components/report/report-view";
 import { demoBenchmarks } from "@/data/demo-portfolio";
-import type { AnalyzePortfolioResponse } from "@/types/analyze";
+import type { AnalyzePortfolioResponse, ExtractedPortfolioData } from "@/types/analyze";
 import type { Portfolio } from "@/types/portfolio";
 
-type Step =
-  | { name: "upload" }
-  | { name: "review"; extraction: AnalyzePortfolioResponse }
-  | { name: "report"; portfolio: Portfolio };
+type Step = { name: "upload" } | { name: "report"; portfolio: Portfolio };
+
+function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
+  const now = new Date().toISOString();
+  return {
+    id: "custom-analysis",
+    slug: "custom-analysis",
+    traderName: data.traderName?.trim() || "محفظتي",
+    reportName: "ME Spot Portfolio Score",
+    tradingType: data.tradingType ?? "spot",
+    aum: data.aum ?? 0,
+    traderCapital: data.traderCapital ?? 0,
+    copiersCount: data.copiersCount ?? 0,
+    profitSharingPercent: data.profitSharingPercent ?? 0,
+    tradingDays: data.tradingDays ?? 0,
+    netProfit: data.netProfit ?? 0,
+    roiPercent: data.roiPercent ?? 0,
+    sharpeRatio: data.sharpeRatio ?? 0,
+    maximumDrawdownPercent: data.maximumDrawdownPercent ?? 0,
+    totalTrades: data.totalTrades ?? 0,
+    winRatePercent: data.winRatePercent ?? 0,
+    winningDays: data.winningDays ?? 0,
+    losingDays: data.losingDays ?? 0,
+    assets: (data.assets ?? []).map((a) => ({ symbol: a.symbol, allocation: a.allocation, quality: "medium" as const })),
+    assetQualityPercent: data.assetQualityPercent ?? 0,
+    stabilityLevel: data.stabilityLevel ?? "moderate",
+    largestAsset: data.largestAsset?.trim() || data.assets?.[0]?.symbol || "—",
+    createdAt: now,
+    updatedAt: now,
+  };
+}
 
 export default function AnalyzePortfolioPage() {
   const [step, setStep] = useState<Step>({ name: "upload" });
@@ -31,14 +57,14 @@ export default function AnalyzePortfolioPage() {
         body: JSON.stringify({ images: images.map((image) => image.dataUrl) }),
       });
 
-      const payload = await response.json();
+      const payload = await response.json() as AnalyzePortfolioResponse;
 
       if (!response.ok) {
-        setErrorMessage(payload.error ?? "تعذّر تحليل الصور. حاول مرة أخرى.");
+        setErrorMessage((payload as { error?: string }).error ?? "تعذّر تحليل الصور. حاول مرة أخرى.");
         return;
       }
 
-      setStep({ name: "review", extraction: payload as AnalyzePortfolioResponse });
+      setStep({ name: "report", portfolio: extractionToPortfolio(payload.data) });
     } catch {
       setErrorMessage("تعذّر الاتصال بالخادم. تحقق من اتصالك وحاول مرة أخرى.");
     } finally {
@@ -70,21 +96,11 @@ export default function AnalyzePortfolioPage() {
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-extrabold text-foreground">قيّم محفظتك</h1>
         <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-          ارفع سكرين شوت لمحفظتك، راجع البيانات المستخرجة، واحصل على تقرير ME Spot Portfolio Score الكامل فوراً.
+          ارفع سكرين شوت لمحفظتك، واحصل على تقرير ME Spot Portfolio Score الكامل فوراً.
         </p>
       </div>
 
-      {step.name === "upload" ? (
-        <ScreenshotUploader onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} errorMessage={errorMessage} />
-      ) : (
-        <PortfolioReviewForm
-          extracted={step.extraction.data}
-          missingFields={step.extraction.missingFields}
-          notes={step.extraction.notes}
-          onBack={() => setStep({ name: "upload" })}
-          onConfirm={(portfolio) => setStep({ name: "report", portfolio })}
-        />
-      )}
+      <ScreenshotUploader onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} errorMessage={errorMessage} />
     </div>
   );
 }
