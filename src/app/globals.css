@@ -146,18 +146,19 @@ body {
   }
 }
 
-/* ─── Brand watermark — desktop only, behind all content ─── */
+/* ─── Brand watermark — all screens, behind all content ─── */
 .brand-watermark {
-  display: none;
+  display: block;
   position: fixed;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  height: 110vh;
+  height: 80vh;
   width: auto;
   z-index: 0;
   pointer-events: none;
   user-select: none;
+  opacity: 0.9;
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, black 18%, black 72%, transparent 96%),
     linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%);
@@ -168,9 +169,10 @@ body {
   mask-composite: intersect;
 }
 
-@media (min-width: 900px) {
+@media (max-width: 640px) {
   .brand-watermark {
-    display: block;
+    height: 55vh;
+    opacity: 0.7;
   }
 }
 
