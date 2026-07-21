@@ -152,26 +152,21 @@ body {
   position: fixed;
   right: 0;
   bottom: 0;
-  height: 88vh;
+  height: 90vh;
   width: auto;
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  opacity: 1;
-  -webkit-mask-image:
-    linear-gradient(to left, black 40%, transparent 100%),
-    linear-gradient(to top, black 60%, transparent 100%);
-  -webkit-mask-composite: destination-in;
-  mask-image:
-    linear-gradient(to left, black 40%, transparent 100%),
-    linear-gradient(to top, black 60%, transparent 100%);
-  mask-composite: intersect;
+  opacity: 0.92;
+  transform: scaleX(-1);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%);
 }
 
 @media (max-width: 768px) {
   .brand-watermark {
-    height: 50vh;
-    opacity: 0.5;
+    height: 45vh;
+    opacity: 0.45;
   }
 }
 
