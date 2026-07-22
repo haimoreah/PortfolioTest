@@ -146,25 +146,25 @@ body {
   }
 }
 
-/* ─── Brand watermark — centered behind the tool ─── */
+/* ─── Brand watermark — right side, 6 steps in ─── */
 .brand-watermark {
   display: block;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -45%);
-  height: 95vh;
+  bottom: 0;
+  right: -6vw;
+  height: 92vh;
   width: auto;
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  opacity: 0.55;
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
   .brand-watermark {
-    height: 60vh;
-    opacity: 0.30;
+    height: 50vh;
+    opacity: 0.4;
+    right: -12vw;
   }
 }
 
