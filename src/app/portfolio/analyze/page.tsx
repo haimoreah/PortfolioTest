@@ -39,13 +39,16 @@ function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
     ? data.assetQualityPercent
     : calcAssetQualityFromList(assets);
 
-  // Derive stability level from winning/losing days when not explicitly provided
+  // Derive stability level — Binance never shows "losing days", so use winningDays ÷ tradingDays
   let stabilityLevel = data.stabilityLevel ?? null;
   if (!stabilityLevel) {
     const winning = data.winningDays ?? 0;
-    const losing = data.losingDays ?? 0;
-    const total = winning + losing;
-    const ratio = total > 0 ? (winning / total) * 100 : (data.winRatePercent ?? 0);
+    const tradingDays = data.tradingDays ?? 0;
+    // Prefer tradingDays as denominator; fall back to winRatePercent if days unavailable
+    const ratio =
+      tradingDays > 0
+        ? (winning / tradingDays) * 100
+        : (data.winRatePercent ?? 0);
     if (ratio >= 90) stabilityLevel = "very-stable";
     else if (ratio >= 75) stabilityLevel = "stable";
     else if (ratio >= 50) stabilityLevel = "moderate";
