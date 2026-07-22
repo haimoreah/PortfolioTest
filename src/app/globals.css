@@ -146,27 +146,25 @@ body {
   }
 }
 
-/* ─── Brand watermark — left side ─── */
+/* ─── Brand watermark — right side ─── */
 .brand-watermark {
   display: block;
   position: fixed;
   bottom: 0;
-  left: -2vw;
+  right: -2vw;
   height: 92vh;
   width: auto;
   z-index: 0;
   pointer-events: none;
   user-select: none;
   opacity: 0.9;
-  transform: scaleX(-1);
 }
 
 @media (max-width: 768px) {
   .brand-watermark {
     height: 50vh;
     opacity: 0.4;
-    left: -12vw;
-    right: unset;
+    right: -12vw;
   }
 }
 
