@@ -38,6 +38,19 @@ function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
   const assetQualityPercent = data.assetQualityPercent != null
     ? data.assetQualityPercent
     : calcAssetQualityFromList(assets);
+
+  // Derive stability level from winning/losing days when not explicitly provided
+  let stabilityLevel = data.stabilityLevel ?? null;
+  if (!stabilityLevel) {
+    const winning = data.winningDays ?? 0;
+    const losing = data.losingDays ?? 0;
+    const total = winning + losing;
+    const ratio = total > 0 ? (winning / total) * 100 : (data.winRatePercent ?? 0);
+    if (ratio >= 90) stabilityLevel = "very-stable";
+    else if (ratio >= 75) stabilityLevel = "stable";
+    else if (ratio >= 50) stabilityLevel = "moderate";
+    else stabilityLevel = "unstable";
+  }
   return {
     id: "custom-analysis",
     slug: "custom-analysis",
@@ -59,7 +72,7 @@ function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
     losingDays: data.losingDays ?? 0,
     assets,
     assetQualityPercent,
-    stabilityLevel: data.stabilityLevel ?? "moderate",
+    stabilityLevel: stabilityLevel as Portfolio["stabilityLevel"],
     largestAsset: data.largestAsset?.trim() || data.assets?.[0]?.symbol || "—",
     createdAt: now,
     updatedAt: now,
