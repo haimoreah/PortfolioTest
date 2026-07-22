@@ -120,9 +120,20 @@ export async function extractPortfolioFromImages(images: ExtractionImage[]): Pro
   const raw = toolUseBlock.input as Record<string, unknown>;
   const { missingFields, notes, ...data } = raw;
 
+  // تحقق: إذا كانت الحقول الجوهرية كلها مفقودة، الصورة ليست لقطة محفظة
+  const CRITICAL_FIELDS = ["roiPercent", "totalTrades", "winRatePercent", "netProfit", "tradingDays", "maximumDrawdownPercent"];
+  const missing = Array.isArray(missingFields) ? missingFields as string[] : [];
+  const foundCritical = CRITICAL_FIELDS.filter((f) => !(missing.includes(f)) && (data as Record<string, unknown>)[f] !== undefined);
+
+  if (foundCritical.length === 0) {
+    throw new PortfolioExtractionError(
+      "الصورة المرفوعة لا تبدو لقطة شاشة لمحفظة Spot Copy Trading. يرجى رفع صورة من منصة نسخ التداول (Binance أو Bybit أو ما شابهها)."
+    );
+  }
+
   return {
     data: data as ExtractedPortfolioData,
-    missingFields: Array.isArray(missingFields) ? missingFields.filter((f): f is string => typeof f === "string") : [],
+    missingFields: missing.filter((f): f is string => typeof f === "string"),
     notes: typeof notes === "string" ? notes : undefined,
   };
 }
