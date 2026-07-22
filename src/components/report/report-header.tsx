@@ -20,7 +20,7 @@ export function ReportHeader({ portfolio, scoreResult }: ReportHeaderProps) {
     <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-card">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,color-mix(in_srgb,var(--primary)_16%,transparent),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,color-mix(in_srgb,var(--primary)_16%,transparent),transparent_75%)]"
       />
 
       <div className="relative flex flex-col gap-6 p-5 sm:p-8">
