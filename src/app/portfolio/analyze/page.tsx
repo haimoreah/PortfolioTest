@@ -12,8 +12,32 @@ import type { Portfolio } from "@/types/portfolio";
 
 type Step = { name: "upload" } | { name: "report"; portfolio: Portfolio };
 
+// Tier classification for asset quality calculation
+const TIER1 = new Set(["BTC", "ETH"]);
+const TIER2 = new Set(["SOL", "BNB", "XRP", "ADA", "DOT", "AVAX", "MATIC", "LINK", "UNI", "LTC",
+  "ATOM", "XLM", "TRX", "TON", "NEAR", "ICP", "FIL", "VET", "ALGO", "USDT", "USDC", "BUSD"]);
+
+function calcAssetQualityFromList(assets: Array<{ symbol: string; allocation?: number }>): number {
+  if (!assets.length) return 50;
+  let weightedSum = 0;
+  let totalAlloc = 0;
+  for (const a of assets) {
+    const alloc = a.allocation ?? (100 / assets.length);
+    const sym = a.symbol.toUpperCase().replace(/USDT$|BUSD$/, "");
+    const quality = TIER1.has(sym) ? 100 : TIER2.has(sym) ? 75 : 45;
+    weightedSum += quality * alloc;
+    totalAlloc += alloc;
+  }
+  return totalAlloc > 0 ? Math.round(weightedSum / totalAlloc) : 50;
+}
+
 function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
   const now = new Date().toISOString();
+  const assets = (data.assets ?? []).map((a) => ({ symbol: a.symbol, allocation: a.allocation, quality: "medium" as const }));
+  // Use explicit metric if provided, otherwise calculate from asset list
+  const assetQualityPercent = data.assetQualityPercent != null
+    ? data.assetQualityPercent
+    : calcAssetQualityFromList(assets);
   return {
     id: "custom-analysis",
     slug: "custom-analysis",
@@ -33,8 +57,8 @@ function extractionToPortfolio(data: ExtractedPortfolioData): Portfolio {
     winRatePercent: data.winRatePercent ?? 0,
     winningDays: data.winningDays ?? 0,
     losingDays: data.losingDays ?? 0,
-    assets: (data.assets ?? []).map((a) => ({ symbol: a.symbol, allocation: a.allocation, quality: "medium" as const })),
-    assetQualityPercent: data.assetQualityPercent ?? 0,
+    assets,
+    assetQualityPercent,
     stabilityLevel: data.stabilityLevel ?? "moderate",
     largestAsset: data.largestAsset?.trim() || data.assets?.[0]?.symbol || "—",
     createdAt: now,
